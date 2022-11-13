@@ -15,6 +15,8 @@ class VerifyCsrfToken extends Middleware
         //
         'http://127.0.0.1:8000/api/instagram/hashtag',
         'http://127.0.0.1:8000/api/instagram/event',
-
+        'http://127.0.0.1:8000/api/instagram/users/register',
+        'http://127.0.0.1:8000/api/instagram/users/login',
+        'http://127.0.0.1:8000/api/instagram/event/*',
     ];
 }

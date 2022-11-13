@@ -47,16 +47,15 @@ class EventController extends Controller
 
     public function postEvent(Request $request)
     {
-        $event_count = Event::all()->count();
-        $data = [
-            'event' => 'event' .  ((int)$event_count + 1),
-            'hashtag' => $request->hashtag,
-            'grid' => $request->grid,
-            'transition' => $request->transition,
-            'data_instagram' => $request->data_instagram
-        ];
-
         try {
+            $event_count = Event::all()->count();
+            $data = [
+                'event' => 'event' .  ((int)$event_count + 1),
+                'hashtag' => $request->hashtag,
+                'grid' => $request->grid,
+                'transition' => $request->transition,
+                'data_instagram' => $request->data_instagram
+            ];
             $created = Event::create($data);
             if ($created) {
                 return response()->json(
@@ -89,6 +88,27 @@ class EventController extends Controller
         $data = Event::where('id', $id)->get();
         if ($data) {
             return json_decode($data);
+        }
+    }
+
+    public function updateEventById(Request $request, $id)
+    {
+        try {
+            $data = [
+                'grid' => $request->grid,
+                'transition' => $request->transition
+            ];
+
+            Event::where('id', $id)->update($data);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Event successfully updated.'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $th
+            ]);
         }
     }
 
